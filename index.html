@@ -11,12 +11,33 @@ body {
   font-family: Arial, sans-serif;
 }
 
-/* 🔴 IMPORTANT: FORCE PRINT BACKGROUND COLORS */
+/* 🔴 FORCE PRINT BACKGROUND COLORS */
 @media print {
   * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
+  #printBtn {
+    display: none !important; /* hide button in print */
+  }
+}
+
+/* 🖨️ PRINT BUTTON */
+#printBtn {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 9999;
+
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: bold;
+
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 /* A4 layout */
@@ -43,7 +64,7 @@ body {
   display: flex;
   gap: 3mm;
   padding: 3mm;
-  background-color: #e0e0e0; /* PRINT SAFE */
+  background-color: #e0e0e0;
 }
 
 .header-title {
@@ -53,7 +74,8 @@ body {
   line-height: 1.2;
 
   display: flex;
-  align-items: center;     /* vertical center */
+  align-items: center;
+  justify-content: center;
   text-align: center;
 }
 
@@ -61,8 +83,8 @@ body {
 .logo-box {
   width: 10mm;
   height: 10mm;
-  background: transparent;   /* no background */
-  border: none;              /* ❌ remove outline */
+  background: transparent;
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,7 +103,6 @@ body {
   align-items: center;
   justify-content: center;
   margin: 4mm 0;
-
   min-height: 30mm;
   max-height: 34mm;
 }
@@ -91,7 +112,6 @@ body {
   max-height: 100%;
   object-fit: contain;
 }
-
 
 /* Bottom section */
 .bottom {
@@ -121,7 +141,7 @@ body {
 
 /* Price box */
 .price-box {
-  background-color: #e0e0e0; /* PRINT SAFE */
+  background-color: #e0e0e0;
   text-align: center;
   margin-top: 4mm;
   padding: 4mm;
@@ -140,6 +160,9 @@ body {
 </head>
 
 <body>
+
+<!-- 🖨️ PRINT BUTTON -->
+<button id="printBtn" onclick="window.print()">🖨️ Print</button>
 
 <div id="pages"></div>
 
@@ -197,7 +220,6 @@ fetch(CSV_URL)
 
     rows.forEach(row => {
 
-      /* ✅ SELECT ONLY ROWS WITH YES */
       if (!row.includes("YES")) return;
 
       const yesIndex = row.indexOf("YES");
